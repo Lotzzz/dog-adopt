@@ -21,11 +21,26 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.Card
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,8 +49,6 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -73,10 +86,12 @@ fun MyApp() {
 fun Home(navController: NavController) {
     Scaffold(
         topBar = {
-            TopAppBar(title = { TopBarTitle() },
+            TopAppBar(
+                title = { TopBarTitle() },
                 navigationIcon = {
                     TopBarIcon(R.drawable.smile)
-                })
+                }
+            )
         },
         content = {
             HomeContent(navController)
@@ -100,10 +115,13 @@ fun HomeContent(navController: NavController) {
                 elevation = 5.dp,
                 contentColor = MaterialTheme.colors.onSecondary
             ) {
-                SimpleDog(dog = dog, onClick = {
-                    navController.currentBackStackEntry?.arguments?.putParcelable("dog", dog)
-                    navController.navigate("detail")
-                })
+                SimpleDog(
+                    dog = dog,
+                    onClick = {
+                        navController.currentBackStackEntry?.arguments?.putParcelable("dog", dog)
+                        navController.navigate("detail")
+                    }
+                )
             }
         }
     }
@@ -117,7 +135,8 @@ fun SimpleDog(dog: Dog, onClick: () -> Unit) {
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        CoilImage(data = dog.urls?.thumb ?: "",
+        CoilImage(
+            data = dog.urls?.thumb ?: "",
             contentDescription = "",
             modifier = Modifier
                 .width(100.dp)
@@ -125,7 +144,8 @@ fun SimpleDog(dog: Dog, onClick: () -> Unit) {
                 .padding(5.dp),
             requestBuilder = {
                 transformations(CircleCropTransformation())
-            })
+            }
+        )
         Spacer(modifier = Modifier.size(20.dp))
         Column(
             horizontalAlignment = Alignment.Start
@@ -193,10 +213,12 @@ fun TopBarIcon(resId: Int, onClick: () -> Unit = {}) {
 fun Detail(navController: NavController) {
     Scaffold(
         topBar = {
-            TopAppBar(title = { TopBarTitle() },
+            TopAppBar(
+                title = { TopBarTitle() },
                 navigationIcon = {
                     TopBarIcon(R.drawable.back) { navController.navigateUp() }
-                })
+                }
+            )
         },
         content = {
             DetailContent(navController)
